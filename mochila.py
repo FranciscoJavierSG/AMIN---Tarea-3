@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import sys
 
 def factibilidad(mochila):
@@ -26,12 +27,12 @@ else:
 
 np.random.seed(semilla)
 
-NCS = np.genfromtxt(archivo, delimiter=' ', skip_header = 1 , usecols=(1) , skip_footer=2596, dtype = int)
-mochila = np.genfromtxt(archivo, delimiter=',', skip_header = 5 , usecols=(1, 2, 3) , skip_footer=2575, dtype = int) 
+NCS = pd.read_table(archivo, delimiter=' ', skiprows= 1 , usecols=(1) , skip_footer=2596, dtype = int)
+mochila = pd.read_table(archivo, delimiter=',', skiprows = 5 , usecols=(1, 2, 3) , skip_footer=2575, dtype = int) 
 while True:    
     sol_inicial = np.random.randint(2, size=int(NCS[0]))     
     if factibilidad(mochila): # Si no es factible, break         
         break 
 probabilidad = (np.arange(int(NCS[0])) + 1)**-tau
 fitness = generarFitness(mochila)
-
+print(fitness)
