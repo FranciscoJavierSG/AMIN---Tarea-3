@@ -1,7 +1,7 @@
 # Algoritmos Metaheurísticos Inspirados en la Naturaleza
 *Autores: José Avilán (javilan@ing.ucsc.cl) y Francisco Salazar (fsalazarg@ing.ucsc.cl)*
 
-(INGRESAR DESCRIPCION)
+Desarrollar una aplicación que implemente el Problema de la Mochila a través del método de Extremal Optimisation utilizando el lenguaje de programación Python.
 
 ## Instalación
 Antes de ejecutar el programa, es necesario:
