@@ -22,16 +22,15 @@ if len(sys.argv) == 5:
     print("Tau (τ): ", tau)
 else:
     print('Error en la entrada de los parametros')
-    print('Los paramentros a ingresar son: semila, archivo de entrada, numero de interaciones y Tau (τ)')
     sys.exit(0)
-    
+
 np.random.seed(semilla)
 
 NCS = np.genfromtxt(archivo, delimiter=' ', skip_header = 1 , usecols=(1) , skip_footer=2596, dtype = int)
 mochila = np.genfromtxt(archivo, delimiter=',', skip_header = 5 , usecols=(1, 2, 3) , skip_footer=2575, dtype = int) 
 while True:    
     sol_inicial = np.random.randint(2, size=int(NCS[0]))     
-    if factibilidad():         
+    if factibilidad(): # Si no es factible, break         
         break 
 probabilidad = (np.arange(int(NCS[0])) + 1)**-tau
 fitness = generarFitness()
