@@ -14,11 +14,11 @@ def generarFitness(mochila):
 if len(sys.argv) == 5: 
     archivo = str(sys.argv[1])
     semilla = int(sys.argv[2])
-    numIt = int(sys.argv[3])
+    numIteraciones = int(sys.argv[3])
     tau = float(sys.argv[4])
     print("Archivo de entrada: ", archivo)
     print("Semilla: ", semilla)
-    print("Número de iteraciones: ", numIt)
+    print("Número de iteraciones: ", numIteraciones)
     print("Tau (τ): ", tau)
 else:
     print('Error en la entrada de los parametros')
