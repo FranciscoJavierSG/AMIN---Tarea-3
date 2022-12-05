@@ -1,4 +1,5 @@
 import numpy as np
+# import pandas as pd
 import sys
 
 def factibilidad(mochila):
@@ -26,3 +27,13 @@ else:
     sys.exit(0)
     
 np.random.seed(semilla)
+
+ncz = np.genfromtxt(archivo, delimiter=' ', skip_header = 1 , usecols=(1) , skip_footer=2596, dtype = int) # primer n=nodos c=capacidad z=mejor_solucion en el archivo 
+mochila = np.genfromtxt(archivo, delimiter=',', skip_header = 5 , usecols=(1, 2, 3) , skip_footer=2575, dtype = int) # valor, peso, asignacion 
+while True: # Solucion inicial factible, mejorable para capacidades pequeñas     
+    sol_inicial = np.random.randint(2, size=int(ncz[0]))     
+    if factibilidad():         
+        break 
+probabilidad = (np.arange(int(ncz[0])) + 1)**-tau 
+# np.random.choice(np.arange(int(ncz[0])), 1, p=probabilities/np.sum(probabilities)) # AUN SIN USAR, elegir por metodo de la ruleta 
+fitness = generarFitness()
