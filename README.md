@@ -12,17 +12,14 @@ Antes de ejecutar el programa, es necesario:
 Para ejecutar el programa, escriba lo siguiente en la consola o terminal de su sistema operativo:
 
 ```       
-py hormigas.py <Semilla> <Matriz_Coords> <Tamaño_Pob> <Iteraciones> <Factor_Evap> <Valor_Heur> <Prob_Limite>
+py mochila.py <Archivo> <Seed> <Iteraciones> <Tau>
 ```
 
 Donde:
-- **Semilla**: Número entero positivo que representa el valor de la semilla.
-- **Matriz_Coords**: Archivo de entrada, documento con las coordenadas de los nodos.
-- **Tamaño_Pob**: Tamaño de la colonia o número de hormigas, valor entero.
+- **Archivo** : Archivo de entrada, documento con los elementos de la mochila.
+- **Seed**: Valor semilla generador valores randómicos, valor entero.
 - **Iteraciones**: Condición de término o número de iteraciones, valor entero.
-- **Factor_Evap**: Factor de evaporación de la feromona, valor entero entre 0 y 1.
-- **Valor_Heur**: El peso del valor de la heurística, valor entero entre 0 y 1.
-- **Prob_Limite**: Valor de probabilidad límite, valor entero entre 0 y 1.
+- **Tau**: Valor de Tau.
 
 ## Ejemplo de Ejecución
 
