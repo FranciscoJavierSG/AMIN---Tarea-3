@@ -24,5 +24,5 @@ Donde:
 ## Ejemplo de Ejecución
 
 ```
-py hormigas.py 1 berlin32.txt 50 200 0.1 2.5 0.9
+py mochila.py .\Knapsack_Test_Instances\smallcoeff_pisinger\knapPI_1_50_1000.csv 1 100 0.9
 ```

@@ -12,7 +12,7 @@ def generarFitness(mochila):
     fitness = mochila[:, 0]/mochila[:, 1]
     return fitness
 
-if len(sys.argv) == 5:  # py.exe mochila.py .\Knapsack_Test_Instances\smallcoeff_pisinger\knapPI_1_50_1000.csv 1 100 0.9
+if len(sys.argv) == 5:  # py mochila.py .\Knapsack_Test_Instances\smallcoeff_pisinger\knapPI_1_50_1000.csv 1 100 0.9
     archivo = str(sys.argv[1])
     semilla = int(sys.argv[2])
     numIt = int(sys.argv[3])
