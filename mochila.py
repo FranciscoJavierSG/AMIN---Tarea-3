@@ -73,7 +73,7 @@ while (tauActual < tauFinal):
                 solInicial[indiceRandom] = 1
         iteracionActual = iteracionActual - 1
         print("Iteracion ",iteracionActual)
-        list.append(np.sum(solInicial*mochila[:, 0]))
+        list.append(np.sum(solInicial*precio))
     
     tauList.append(list)
     tauActual = tauActual + 0.1
