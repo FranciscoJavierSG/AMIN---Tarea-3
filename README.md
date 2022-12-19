@@ -12,17 +12,18 @@ Antes de ejecutar el programa, es necesario:
 Para ejecutar el programa, escriba lo siguiente en la consola o terminal de su sistema operativo:
 
 ```       
-py mochila.py <Archivo> <Seed> <Iteraciones> <Tau>
+py mochila.py <Archivo> <SemFinal> <NumIteraciones> <TauIni> <TauFin>
 ```
 
 Donde:
-- **Archivo** : Archivo de entrada, documento con los elementos de la mochila.
-- **Seed**: Valor semilla generador valores randómicos, valor entero.
-- **Iteraciones**: Condición de término o número de iteraciones, valor entero.
-- **Tau**: Valor de Tau.
+- **Archivo**: Archivo de entrada, documento con los elementos de la mochila.
+- **SemFinal**: Valor que tomará la última semilla a evaluar (desde el 1 hasta SemFinal). Valor entero.
+- **NumIteraciones**: Condición de término o número de iteraciones. Valor entero.
+- **TauIni**: Valor inicial de Tau.
+- **TauFin**: Valor final de Tau.
 
 ## Ejemplo de Ejecución
 
 ```
-py mochila.py .\Knapsack_Test_Instances\smallcoeff_pisinger\knapPI_1_50_1000.csv 1 100 0.9
+py mochila.py .\Knapsack_Test_Instances\hardinstances_pisinger\knapPI_11_20_1000.csv 30 10000 1.4 1.9
 ```
