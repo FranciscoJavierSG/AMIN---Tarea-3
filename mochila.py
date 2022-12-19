@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import sys
 
 def generarFitness():
@@ -8,14 +9,18 @@ def generarFitness():
 
 if len(sys.argv) == 6: 
     entrada = str(sys.argv[1])
-    semilla = int(sys.argv[2])
-    numIteraciones = int(sys.argv[3])
-    tauInicial = float(sys.argv[4])
-    tauFinal = float(sys.argv[5])
     print("Archivo de entrada: ", entrada)
+
+    semilla = int(sys.argv[2])
     print("Semilla: ", semilla)
+
+    numIteraciones = int(sys.argv[3])
     print("Número de iteraciones: ", numIteraciones)
+
+    tauInicial = float(sys.argv[4])
     print("Tau inicial (τ): ", tauInicial)
+
+    tauFinal = float(sys.argv[5])    
     print("Tau final (τ): ", tauFinal)
 else:
     print('Error en la entrada de los parametros')
@@ -24,20 +29,18 @@ else:
 np.random.seed(semilla)
 
 tauActual = tauInicial
-iteracionActual = numIteraciones #Va al reves (de numIteraciones al 0)
-tauList = []
+listTau = []
 
-while (tauActual < tauFinal):
-    list = []
+while (tauActual <= tauFinal):
+    solucionTau = []
+    iteracionActual = numIteraciones 
+
     #Inicializacion
     ncz = pd.read_table(entrada, nrows=4, delim_whitespace=True) 
-    nombre_problema = ncz.columns[0]
-    n=int(ncz[nombre_problema][0])
-    c=int(ncz[nombre_problema][1])
-    z=int(ncz[nombre_problema][2])
-    print("n = ", n)
-    print("c = ", c)
-    print("z = ", z)
+    nombreProblema = ncz.columns[0]
+    n=int(ncz[nombreProblema][0])
+    c=int(ncz[nombreProblema][1])
+    z=int(ncz[nombreProblema][2])
 
     mochila = pd.read_table(entrada, header=None, sep=',', skiprows = 5, nrows=n).drop(columns=0,axis=1)
 
@@ -45,24 +48,18 @@ while (tauActual < tauFinal):
     peso = mochila[2].to_numpy()
     solucionOptima = mochila[3].to_numpy()
 
-    print("precio = ", precio)
-    print("peso = ", peso)
-    print("solucionOptima = ", solucionOptima)
-
     vectorProbabilidad = np.full(n,np.arange(1,n+1)**(-tauActual),float)
     solInicial = np.random.randint(2, size=n)
-
-    print("solInicial = ", solInicial)
 
     #Algoritmo de Extremal Optimisation
     fitness = generarFitness()
     fitnessNuevo = np.sort(fitness) #fitnessOrdenado
-    print("Antes del while")
-    while iteracionActual > 0 and np.sum(solInicial*precio) < z:
-        print("Dentro del while")
+
+    while iteracionActual > 0: # and np.sum(solInicial*precio) < z
         elegido =  np.random.choice(fitnessNuevo, 1, p=vectorProbabilidad/np.sum(vectorProbabilidad))
         indice = np.where(fitness == elegido)
         indiceRandom = np.random.choice(indice[0], 1)
+
         if(solInicial[indiceRandom] == 0):
             solInicial[indiceRandom] = 1
             if np.sum(solInicial*peso) > c:
@@ -71,9 +68,16 @@ while (tauActual < tauFinal):
             solInicial[indiceRandom] = 0
             if np.sum(solInicial*peso) > c:
                 solInicial[indiceRandom] = 1
+
         iteracionActual = iteracionActual - 1
-        print("Iteracion ",iteracionActual)
-        list.append(np.sum(solInicial*precio))
+
+        solucionTau.append(np.sum(solInicial*precio))
     
-    tauList.append(list)
+    listTau.append(solucionTau)
     tauActual = tauActual + 0.1
+
+plt.suptitle('Diagrama de caja', fontsize=14, fontweight='bold')
+plt.xlabel('Valor de Tau')
+plt.boxplot(listTau)
+plt.xticks(np.arange(1, len(listTau) + 1), np.arange(tauInicial, tauActual-0.1, 0.1, dtype=float).round(1))
+plt.show()
