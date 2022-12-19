@@ -12,14 +12,15 @@ Antes de ejecutar el programa, es necesario:
 Para ejecutar el programa, escriba lo siguiente en la consola o terminal de su sistema operativo:
 
 ```       
-py mochila.py <Archivo> <Semilla> <NumIteraciones> <Tau>
+py mochila.py <Archivo> <Semilla> <NumIteraciones> <TauIni> <TauFin>
 ```
 
 Donde:
 - **Archivo** : Archivo de entrada, documento con los elementos de la mochila.
 - **Semilla**: Valor de la semilla generadora de valores randómicos, valor entero.
 - **NumIteraciones**: Condición de término o número de iteraciones, valor entero.
-- **Tau**: Valor de Tau.
+- **TauIni**: Valor inicial de Tau.
+- **TauFin**: Valor final de Tau.
 
 ## Ejemplo de Ejecución
 

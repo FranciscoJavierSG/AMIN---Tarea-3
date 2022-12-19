@@ -2,11 +2,11 @@ import numpy as np
 import pandas as pd
 import sys
 
-def generarFitness(mochila):
-    fitness = mochila[:, 0]/mochila[:, 1]
+def generarFitness():
+    fitness = precio/peso
     return fitness
 
-if len(sys.argv) == 5: 
+if len(sys.argv) == 6: 
     entrada = str(sys.argv[1])
     semilla = int(sys.argv[2])
     numIteraciones = int(sys.argv[3])
@@ -24,16 +24,20 @@ else:
 np.random.seed(semilla)
 
 tauActual = tauInicial
-iteracionMax = numIteraciones
-iteracionActual = 0
+iteracionActual = numIteraciones #Va al reves (de numIteraciones al 0)
+tauList = []
 
 while (tauActual < tauFinal):
+    list = []
     #Inicializacion
     ncz = pd.read_table(entrada, nrows=4, delim_whitespace=True) 
     nombre_problema = ncz.columns[0]
     n=int(ncz[nombre_problema][0])
-    c=int(ncz[nombre_problema][0])
-    z=int(ncz[nombre_problema][0])
+    c=int(ncz[nombre_problema][1])
+    z=int(ncz[nombre_problema][2])
+    print("n = ", n)
+    print("c = ", c)
+    print("z = ", z)
 
     mochila = pd.read_table(entrada, header=None, sep=',', skiprows = 5, nrows=n).drop(columns=0,axis=1)
 
@@ -41,9 +45,35 @@ while (tauActual < tauFinal):
     peso = mochila[2].to_numpy()
     solucionOptima = mochila[3].to_numpy()
 
+    print("precio = ", precio)
+    print("peso = ", peso)
+    print("solucionOptima = ", solucionOptima)
+
     vectorProbabilidad = np.full(n,np.arange(1,n+1)**(-tauActual),float)
-    sol = np.random.randint(2, size=n)
+    solInicial = np.random.randint(2, size=n)
+
+    print("solInicial = ", solInicial)
 
     #Algoritmo de Extremal Optimisation
     fitness = generarFitness()
-    fitness = np.sort(fitness) #fitnessOrdenado
+    fitnessNuevo = np.sort(fitness) #fitnessOrdenado
+    print("Antes del while")
+    while iteracionActual > 0 and np.sum(solInicial*precio) < z:
+        print("Dentro del while")
+        elegido =  np.random.choice(fitnessNuevo, 1, p=vectorProbabilidad/np.sum(vectorProbabilidad))
+        indice = np.where(fitness == elegido)
+        indiceRandom = np.random.choice(indice[0], 1)
+        if(solInicial[indiceRandom] == 0):
+            solInicial[indiceRandom] = 1
+            if np.sum(solInicial*peso) > c:
+                solInicial[indiceRandom] = 0
+        else:
+            solInicial[indiceRandom] = 0
+            if np.sum(solInicial*peso) > c:
+                solInicial[indiceRandom] = 1
+        iteracionActual = iteracionActual - 1
+        print("Iteracion ",iteracionActual)
+        list.append(np.sum(solInicial*mochila[:, 0]))
+    
+    tauList.append(list)
+    tauActual = tauActual + 0.1
