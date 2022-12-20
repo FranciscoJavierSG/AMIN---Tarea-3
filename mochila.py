@@ -1,4 +1,3 @@
-#El programa no solicita al usuario que ingrese una semilla, pues evalúa las semillas del 1 al 30
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -19,7 +18,7 @@ if len(sys.argv) == 6:
     print("Archivo de entrada:", entrada)
 
     semFinal = int(sys.argv[2])
-    print("Semilla:", semFinal)
+    print("Semilla Final:", semFinal)
     
     numIteraciones = int(sys.argv[3])
     print("Número de iteraciones:", numIteraciones)
@@ -38,13 +37,11 @@ listaTau = []
 
 while (tauActual <= tauFinal):
     solucionTau = []
-    semActual = 0
-    
-    #Cambiar por un for x in range(1,30)
-    while semActual < semFinal:
+
+    for semActual in range (1, semFinal):
         np.random.seed(semActual)
-        
         iteracionActual = numIteraciones 
+
         #Inicializacion
         ncz = pd.read_table(entrada, nrows=4, delim_whitespace=True) 
         nombreProblema = ncz.columns[0]
@@ -71,7 +68,7 @@ while (tauActual <= tauFinal):
         fitnessNuevo = np.sort(fitness) #fitnessOrdenado
         
         #Algoritmo de Extremal Optimisation
-        while iteracionActual > 0: # and np.sum(solInicial*precio) < z
+        while iteracionActual > 0:
             elegido =  np.random.choice(fitnessNuevo, 1, p=vectorProbabilidad/np.sum(vectorProbabilidad))
             indice = np.where(fitness == elegido)
             indiceRandom = np.random.choice(indice[0], 1)
@@ -88,12 +85,12 @@ while (tauActual <= tauFinal):
             iteracionActual = iteracionActual - 1
          
         solucionTau.append(np.sum(solInicial*precio))
-        semActual = semActual + 1
         
     listaTau.append(solucionTau)
     tauActual = tauActual + 0.1
 
 fig = plt.figure(figsize=(10,7))
+fig.suptitle('Gráfico de caja', fontsize=20, fontweight='bold')
 plt.boxplot(listaTau)
 plt.xlabel('Valor de Tau')
 plt.xticks([1, 2, 3, 4, 5], [1.4, 1.5, 1.6, 1.7, 1.8])
